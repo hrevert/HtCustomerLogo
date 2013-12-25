@@ -1,0 +1,35 @@
+{
+    "name": "hrevert/ht-customer-logo",
+    "description": "A Zend framework 2 module useful to provide logo upload funcationality",
+    "type": "library",
+    "keywords": [
+        "zf2",
+        "module",
+        "zendframework"
+    ],
+    "homepage": "https://github.com/hrevert/HtCustomerLogo",
+    "authors": [
+        {
+            "name": "Hrevert Technologies",
+            "email": "info@hrevert.com"
+        },
+        {
+            "name": "ojhaujjwal",
+            "email": "bring2uo@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "zendframework/zendframework": "2.2.*",
+        "zf-commons/zfc-base": "0.1.2",
+        "webino/webino-image-thumb": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "HtCustomerLogo": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}

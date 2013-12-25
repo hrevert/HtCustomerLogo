@@ -1,0 +1,18 @@
+<?php
+$title = "Logo Upload";
+$this->headTitle($title);
+?>
+<h2><?php echo $title; ?></h2>
+<br/>
+<?php if ($logoUploaded): ?>
+<div class="alert alert-success">Logo Uploaded Successfully.</div>
+<?php elseif($error): ?>
+<div class="alert alert-danger">An error occured.</div>
+<?php endif; ?>
+<?php echo $this->form()->openTag($form); ?>
+<?php echo $this->formElement($form->get('logo')) . $this->formElementErrors($form->get('logo')); ?>
+<br/>
+<?php echo $this->formElement($form->get('submit')); ?>
+<?php echo $this->form()->closeTag(); ?>
+<br/>
+<div class="alert alert-info">Allowed image types: Jpeg, Jpg, Png and Gif</div>
