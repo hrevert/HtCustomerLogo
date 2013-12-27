@@ -43,6 +43,7 @@ abstract class AbstractResizing extends AbstractOptions implements ResizingInter
         if ($this->getSave()) {
             $thumb->save($this->getImagepath());
         }
+
         return $thumb;        
     }
 

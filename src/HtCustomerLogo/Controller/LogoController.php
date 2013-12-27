@@ -30,7 +30,7 @@ class LogoController extends AbstractActionController
                             'uploaded' => true
                         ));                     
                     } elseif ($options->getPostUploadRoute()) {
-                        return call_user_func_array(array($this, 'redirect'), (array) $options->getPostUploadRoute());
+                        return call_user_func_array(array($this->redirect(), 'toRoute'), (array) $options->getPostUploadRoute());
                     } 
                     $logoUploaded = true; 
             } else {

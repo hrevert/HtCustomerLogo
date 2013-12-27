@@ -70,9 +70,9 @@ class Crop extends AbstractResizing
     {
         $this->crop(
             $this->getX1(),
+            $this->getY1(),
             $this->getX2(),
-            $this->getX3(),
-            $this->getX4()
+            $this->getY2()
         );
     }
 }
