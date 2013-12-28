@@ -12,9 +12,10 @@ Note: This module is not fully tested.
 * Event Driven(obvious with Zend Framework, isn't it?)
 
 ## Requirements
-* Zend Framework 2.2.*
-* ZfcBase 0.1.2
-* WebinoPhpThumb dev-master
+* [Zend Framework](https://github.com/zendframework/zf2/)
+* [ZfcBase](https://github.com/Zf-Commons/ZfcBase)
+* [WebinoPhpThumb](https://github.com/webino/WebinoImageThumb)
+* [HCommons](https://github.com/ojhaujjwal/HCommons)
 
 ## Installation
 * Add `"hrevert/ht-customer-logo": "dev-master",` to your composer.json and run `php composer.phar update`
@@ -27,6 +28,3 @@ Note: This module is not fully tested.
 ## How To
 
 Please check this [wiki](https://github.com/hrevert/HtCustomerLogo/wiki) for more details on how to use this module.
-
-
-
