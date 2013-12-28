@@ -49,13 +49,15 @@ $options = array(
         * Resizer Name
         *
         * Fully Qualified ClassName of Resizer
-        * It should implement HtCustomerLogo\Image\ResizingInterface
+        * It should implement HCommons\Image\ResizingInterface
         * 
         * Available Resizers
-        * 1) HtCustomerLogo\Image\BasicResizing
-        * 2) HtCustomerLogo\Image\Crop
-        * 3) HtCustomerLogo\Image\CropFromCenter
-        * 4) HtCustomerLogo\Image\AdaptiveResizing
+        * 1) HCommons\Image\BasicResizing
+        * 2) HCommons\Image\Crop
+        * 3) HCommons\Image\CropFromCenter
+        * 4) HCommons\Image\AdaptiveResizing
+        * 5) HCommons\Image\FitToWidth
+        * 6) HCommons\Image\FitToHeight
         *
         */
         //'name' => '',// 

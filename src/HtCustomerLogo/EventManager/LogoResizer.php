@@ -6,7 +6,7 @@ use Zend\EventManager\SharedEventManagerInterface;
 use Zend\EventManager\SharedListenerAggregateInterface;
 use Zend\EventManager\Event;
 use HtCustomerLogo\Options\LogoStorageOptionsInterface;
-use HtCustomerLogo\Image\ResizingInterface;
+use HCommons\Image\ResizingInterface;
 
 class LogoResizer implements SharedListenerAggregateInterface
 {
@@ -47,6 +47,12 @@ class LogoResizer implements SharedListenerAggregateInterface
         }
     }
     
+    /**
+     * listenter event for "logoUploaded" event and is responsible for manipulating image
+     * @param Event $e
+     * @return void
+     * @throws \RunTimeException
+     */
     public function resizeImage(Event $e)
     {
         $file = $e->getParam('uploadTarget');
@@ -61,18 +67,27 @@ class LogoResizer implements SharedListenerAggregateInterface
         $imageManipulator = new $class;
         $imageManipulator->setImagepath($file);
         if (!$imageManipulator instanceof ResizingInterface) {
-            throw new \RunTimeException("Manipulator class must implement HtCustomerLogo\Image\ResizingInterface;");
+            throw new \RunTimeException("Manipulator class must implement HCommons\Image\ResizingInterface;");
         }
         $imageManipulator->setOptions($resizeOptions['options']);
         $imageManipulator->setSave();
-        $imageManipulator->getPhpThumb();
+        $phpThumb = $imageManipulator->getPhpThumb();
     }
     
+    /**
+     * sets storage options
+     * @param LogoStorageOptionsInterface
+     * @return void
+     */
     public function setStorageOptions(LogoStorageOptionsInterface $storageOptions)
     {
         $this->storageOptions = $storageOptions;
     }
-    
+
+    /**
+     * gets storage options
+     * @return LogoStorageOptionsInterface
+     */    
     public function getStorageOptions()
     {
         return $this->storageOptions;

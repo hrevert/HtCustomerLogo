@@ -8,7 +8,7 @@ class ModuleOptions extends AbstractOptions implements LogoStorageOptionsInterfa
 {
     protected $uploadDirectory = null;
 
-    protected $storageResizer = true;
+    protected $storageResizer = false;
 
     protected $serveCroppedImage  = true;
 

@@ -9,6 +9,12 @@ use Zend\View\Model\JsonModel;
 
 class LogoController extends AbstractActionController
 {
+
+    /**
+     * @var HtCustomerLogo\Options\ModuleOptions
+     */
+    protected $options;
+
     public function uploadAction()
     {
         $form = new LogoForm();
@@ -45,6 +51,7 @@ class LogoController extends AbstractActionController
             }
                        
         }
+
         return array(
             'form' => $form,
             'logoUploaded' => $logoUploaded,
@@ -52,16 +59,23 @@ class LogoController extends AbstractActionController
         );
     }
 
-    public function displayAction()
-    {
-        
-    }
 
+    /**
+     * gets module options
+     * @param HtCustomerLogo\Options\ModuleOptions
+     */
     protected function getModuleOptions()
     {
-        return $this->getServiceLocator()->get('HtCustomerLogo\ModuleOptions');
+        if (!$this->options) {
+            $this->options = $this->getServiceLocator()->get('HtCustomerLogo\ModuleOptions');
+        }
+        return $this->options;
     }
 
+    /**
+     * gets module service
+     * @return HtCustomerLogo\Service\LogoService
+     */
     public function getService()
     {
         return $this->getServiceLocator()->get('HtCustomerLogo\LogoService');
