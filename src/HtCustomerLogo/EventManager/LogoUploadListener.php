@@ -72,11 +72,12 @@ class LogoUploadListener implements SharedListenerAggregateInterface
     {
         $image = $e->getParam('image');
         $uploadTarget = $e->getParam('uploadTarget');
+        $service = $e->getTarget();
         $cacheManager = $service->getServiceLocator()->get('HtImgModule\Service\CacheManager');
         $options = $service->getOptions(); 
-        $filters = array_merge($options->getDefaultDisplayFilter(), $options->getDisplayFilters());  
+        $filters = array_merge([$options->getDefaultDisplayFilter()], $options->getDisplayFilters());  
         foreach ($filters as $filter) {
-            $cacheManager->deleteCache('htcustomerlogo', $filter);
+            $cacheManager->deleteCache('htcustomerlogo', $filter, 'png');
         }     
     }
             
