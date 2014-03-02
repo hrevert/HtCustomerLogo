@@ -2,14 +2,14 @@
     
 namespace HtCustomerLogo\Options;
 
-interface LogoStorageOptionsInterface
+interface StorageOptionsInterface
 {
     public function setUploadDirectory($uploadDirectory);
 
     public function getUploadDirectory();
 
-    public function setStorageResizer(array $storageResizer);
+    public function setStorageFilter($storageFilter);
 
-    public function getStorageResizer();
+    public function getStorageFilter();
 
 } 

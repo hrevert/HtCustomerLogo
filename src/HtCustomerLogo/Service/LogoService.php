@@ -4,37 +4,60 @@ namespace HtCustomerLogo\Service;
 
 use ZfcBase\EventManager\EventProvider;
 use HtCustomerLogo\Form\LogoForm;
+use HtCustomerLogo\Form\LogoValidator;
 use HtCustomerLogo\Form\LogoInputFilter;
+use Zend\Http\Request;
 
-class LogoService extends EventProvider
+class LogoService extends EventProvider implements LogoServiceInterface
 {
+    protected $options;
+
+    protected $logoPathProvider;
 
     use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
-    public function uploadLogo(LogoForm $form, array $files)
+    public function storeLogo(Request $request)
     {
-        $uploadTarget = $this->getServiceLocator()->get('HtCustomerLogo\LogoPathModel')->getLogoPath();
+        $form = $this->getServiceLocator()->get('HtCustomerLogo\Form\LogoForm');
+        $this->getEventManager()->trigger(__FUNCTION__, $this, array('form' => $form, 'request' => $request));
+        $validator = new LogoValidator();
+        $form->setInputFilter($validator);
+        $form->setData($request->getFiles());
+        if ($form->isValid()) {
+            $uploadTarget = $this->getLogoPathProvider()->getLogoPath();
+            if (is_readable($uploadTarget)) {
+                unlink($uploadTarget);
+            }
+            $image= $this->getServiceLocator()->get('HtImg\Imagine')
+                ->open($request->getFiles()->toArray()['logo']['tmp_name']);
+            $image->save($uploadTarget);
+            $this->getEventManager()->trigger(__FUNCTION__ . '.post', $this, array('image' => $image, 'uploadTarget' => $uploadTarget));     
 
-        if ($this->getModuleOptions()->getDeleteOldImage() === false && is_readable($uploadTarget)) {
-            $newName = dirname($uploadTarget)."/"."logo-old-".md5(microtime(true));
-            rename($uploadTarget, $newName);
+            return true;
         }
 
-        $inputFilter = new LogoInputFilter($uploadTarget);
-        $inputFilter->init();
-        $form->setInputFilter($inputFilter);
-        $result = $form->isValid();
-        try {
-            $this->getEventManager()->trigger('logoUploaded', null, array('uploadTarget' => $uploadTarget));     
-        } catch (\Exception $e) {
-            return false;
-        }
-
-        return true;
+        return false;     
     }
 
-    protected function getModuleOptions()
+
+    /**
+     * Gets options
+     *
+     * @param \HtCustomerLogo\Options\ModuleOptions
+     */
+    public function getOptions()
     {
-        return $this->getServiceLocator()->get('HtCustomerLogo\ModuleOptions');
+        if (!$this->options) {
+            $this->options = $this->getServiceLocator()->get('HtCustomerLogo\ModuleOptions');
+        }
+        return $this->options;
+    }
+
+    public function getLogoPathProvider()
+    {
+        if (!$this->logoPathProvider) {
+            $this->logoPathProvider = $this->getServiceLocator()->get('HtCustomerLogo\Service\LogoPathProvider');
+        }
+        return $this->logoPathProvider;        
     }
 }

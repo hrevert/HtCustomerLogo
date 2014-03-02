@@ -7,7 +7,7 @@ use Zend\Validator\NotEmpty;
 
 class LogoValidator extends ProvidesEventsInputFilter
 {
-    public function init()
+    public function __construct()
     {
         $this->add(array(
             'name' => 'logo',

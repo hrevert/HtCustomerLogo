@@ -3,42 +3,53 @@
 namespace HtCustomerLogo\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use HtCustomerLogo\Form\LogoForm;
-use HtCustomerLogo\Form\LogoValidator;
 use Zend\View\Model\JsonModel;
+use HtCustomerLogo\Service\LogoServiceInterface;
 
 class LogoController extends AbstractActionController
 {
+    /**
+     * @var LogoServiceInterface
+     */
+    protected $logoService;
 
     /**
-     * @var HtCustomerLogo\Options\ModuleOptions
+     * Constructor
+     *
+     * @param LogoServiceInterface $logoService
+     */
+    public function __construct(LogoServiceInterface $logoService)
+    {
+        $this->logoService = $logoService;
+    }
+
+    /**
+     * @var \HtCustomerLogo\Options\ModuleOptions
      */
     protected $options;
 
+    /**
+     * Uploades logo
+     */
     public function uploadAction()
     {
-        $form = new LogoForm();
+        $form = $this->getServiceLocator()->get('HtCustomerLogo\Form\LogoForm');
 
         $logoUploaded = false;
         $error = false;
 
         $request = $this->getRequest();
-        if ($request->isPost()) {
-            $validator = new LogoValidator();
-            $validator->init();
-            $form->setInputFilter($validator);
-            $form->setData($request->getFiles()->toArray());
-            
-            if ($form->isValid() && $this->getService()->uploadLogo($form, $request->getFiles()->toArray())) {
-                    $options = $this->getModuleOptions();
-                    if ($request->isXmlHttpRequest()) {
-                        return new JsonModel(array(
-                            'uploaded' => true
-                        ));                     
-                    } elseif ($options->getPostUploadRoute()) {
-                        return call_user_func_array(array($this->redirect(), 'toRoute'), (array) $options->getPostUploadRoute());
-                    } 
-                    $logoUploaded = true; 
+        if ($request->isPost()) {           
+            if ($this->logoService->storeLogo($request)) {
+                $options = $this->getOptions();
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonModel(array(
+                        'uploaded' => true
+                    ));                     
+                } elseif ($options->getPostUploadRoute()) {
+                    return call_user_func_array(array($this->redirect(), 'toRoute'), (array) $options->getPostUploadRoute());
+                } 
+                $logoUploaded = true; 
             } else {
                 if ($request->isXmlHttpRequest()) {
                     return new JsonModel(array(
@@ -61,10 +72,11 @@ class LogoController extends AbstractActionController
 
 
     /**
-     * gets module options
-     * @param HtCustomerLogo\Options\ModuleOptions
+     * Gets options
+     *
+     * @param \HtCustomerLogo\Options\ModuleOptions
      */
-    protected function getModuleOptions()
+    protected function getOptions()
     {
         if (!$this->options) {
             $this->options = $this->getServiceLocator()->get('HtCustomerLogo\ModuleOptions');
@@ -72,12 +84,4 @@ class LogoController extends AbstractActionController
         return $this->options;
     }
 
-    /**
-     * gets module service
-     * @return HtCustomerLogo\Service\LogoService
-     */
-    public function getService()
-    {
-        return $this->getServiceLocator()->get('HtCustomerLogo\LogoService');
-    }
 }

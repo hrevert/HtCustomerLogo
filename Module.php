@@ -2,7 +2,8 @@
 namespace HtCustomerLogo;
 
 use Zend\Mvc\MvcEvent;
-use HtCustomerLogo\EventManager\LogoResizer;
+use HtCustomerLogo\EventManager\LogoUploadListener;
+use Zend\EventManager\EventInterface;
 
 class Module
 {
@@ -11,7 +12,7 @@ class Module
         $application = $e->getApplication();
         $eventManager = $application->getEventManager();
         $serviceManager = $application->getServiceManager();
-        $eventManager->getSharedManager()->attachAggregate($serviceManager->get('HtCustomerLogo\LogoResizer'));
+        $eventManager->getSharedManager()->attachAggregate(new LogoUploadListener);
     }
 
     public function getConfig()
@@ -21,49 +22,45 @@ class Module
 
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
+        return [
+            'Zend\Loader\ClassMapAutoloader' => [
                 __DIR__ . '/autoload_classmap.php',
-            ),
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+            ],
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     public function getServiceConfig()
     {
-        return array(
-            'factories' => array(
-                'HtCustomerLogo\ModuleOptions' => function ($sm) {
-                    $config = $sm->get('Config');
-                    $moduleConfig = isset($config['htcustomerlogo']) ? $config['htcustomerlogo'] : array();
-                    //print_r($moduleConfig);
-                    return new Options\ModuleOptions($moduleConfig);
-                },
-                'HtCustomerLogo\LogoPathModel' => function ($sm) {
-                    $options = $sm->get('HtCustomerLogo\ModuleOptions');
-                    $logoPathModel = new Model\LogoPathModel;
-                    if ($sm->has('HtCustomerLogo\LogoDirectoryProvider')) {
-                        $logoPathModel->setLogoDirectoryProvider($sm->get('HtCustomerLogo\LogoDirectoryProvider'));
-                    }
-                    $logoPathModel->setLogoStorageOptions($sm->get('HtCustomerLogo\ModuleOptions'));
-                    return $logoPathModel;
-                
-                },
-                'HtCustomerLogo\LogoResizer' => function ($sm) {
-                    $resizer = new EventManager\LogoResizer();
-                    $resizer->setStorageOptions($sm->get('HtCustomerLogo\ModuleOptions'));
-                    return $resizer;
-                },
-                'HtCustomerLogo\LogoService' => function ($sm) {
-                    $service = new Service\LogoService();
-                    $service->setServiceLocator($sm);
-                    return $service;
-                }            
-            )
-        );
+        return [
+            'invokables' => [
+                'HtCustomerLogo\Form\LogoForm' => 'HtCustomerLogo\Form\LogoForm',
+            ],
+            'factories' => [
+                'HtCustomerLogo\ModuleOptions' => 'HtCustomerLogo\Factory\ModuleOptionsFactory',
+                'HtCustomerLogo\Service\SimpleLogoDirectoryProvider' => 'HtCustomerLogo\Factory\SimpleLogoDirectoryProviderFactory',
+                'HtCustomerLogo\Service\LogoPathProvider' => 'HtCustomerLogo\Factory\LogoPathProviderFactory',
+                'HtCustomerLogo\Service\LogoService' => 'HtCustomerLogo\Factory\LogoServiceFactory',
+            ],
+            'aliases' => [
+                'HtCustomerLogo.LogoDirectoryProvider' => 'HtCustomerLogo\Service\SimpleLogoDirectoryProvider',
+            ]
+        ];
+    }
+
+    public function getViewHelperConfig()
+    {
+        return [
+            'factories' => [
+                'HtCustomerLogo\View\Helper\LogoUrl' => 'HtCustomerLogo\View\Helper\Factory\LogoUrlFactory',
+            ],
+            'aliases' => [
+                'htCustomerLogo' => 'HtCustomerLogo\View\Helper\LogoUrl',
+            ]
+        ];
     }
 }

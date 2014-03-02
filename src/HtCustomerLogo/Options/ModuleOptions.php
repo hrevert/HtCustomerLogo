@@ -4,17 +4,19 @@ namespace HtCustomerLogo\Options;
 
 use Zend\Stdlib\AbstractOptions;
 
-class ModuleOptions extends AbstractOptions implements LogoStorageOptionsInterface
+class ModuleOptions extends AbstractOptions implements StorageOptionsInterface, DisplayOptionsInterface
 {
+    protected $__strictMode__ = false;
+
     protected $uploadDirectory = null;
 
-    protected $storageResizer = false;
+    protected $storageFilter = false;
 
-    protected $serveCroppedImage  = true;
+    protected $displayFilters  = [];
 
-    protected $postUploadRoute;
+    protected $defaultDisplayFilter = 'htcustomerlogo_display';
 
-    protected $deleteOldImage = true;
+    protected $postUploadRoute = false;
 
     public function setUploadDirectory($uploadDirectory)
     {
@@ -26,25 +28,37 @@ class ModuleOptions extends AbstractOptions implements LogoStorageOptionsInterfa
         return $this->uploadDirectory;
     }
 
-    public function setStorageResizer(array $storageResizer)
+    public function setStorageFilter($storageFilter)
     {
-        $this->storageResizer = $storageResizer;
+        $this->storageFilter = $storageFilter;
+
+        return $this;
     }
 
-    public function getStorageResizer()
+    public function getStorageFilter()
     {
-        return $this->storageResizer;
+        return $this->storageFilter;
     }
 
 
-    public function setServeCroppedImage($serveCroppedImage)
+    public function setDisplayFilters($displayFilters)
     {
-        $this->serveCroppedImage = $serveCroppedImage;
+        $this->displayFilters = $displayFilters;
     }
 
-    public function getServeCroppedImage()
+    public function getDisplayFilters()
     {
-        return $this->serveCroppedImage;
+        return $this->displayFilters;
+    }
+
+    public function setDefaultDisplayFilter($defaultDisplayFilter)
+    {
+        $this->defaultDisplayFilter = $defaultDisplayFilter;
+    }
+
+    public function getDefaultDisplayFilter()
+    {
+        return $this->defaultDisplayFilter;
     }
 
     public function setPostUploadRoute($postUploadRoute)
@@ -55,16 +69,6 @@ class ModuleOptions extends AbstractOptions implements LogoStorageOptionsInterfa
     public function getPostUploadRoute()
     {
         return $this->postUploadRoute;
-    }
-
-    public function setDeleteOldImage($deleteOldImage)
-    {
-        $this->deleteOldImage = (bool) $deleteOldImage;
-    }
-
-    public function getDeleteOldImage()
-    {
-        return $this->deleteOldImage;
     }
 
 }
