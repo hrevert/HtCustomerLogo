@@ -3,6 +3,7 @@
 namespace HtCustomerLogo\Service;
 
 use HtCustomerLogo\Options\StorageOptionsInterface;
+use HtCustomerLogo\Exception;
 
 class LogoPathProvider implements LogoPathProviderInterface
 {
