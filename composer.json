@@ -7,7 +7,7 @@
         "module",
         "zendframework"
     ],
-    "homepage": "https://bitbucket.org/hrevert/htcustomerlogo",
+    "homepage": "https://github.com/hrevert/htcustomerlogo",
     "authors": [
         {
             "name": "Hrevert Technologies",
@@ -22,7 +22,7 @@
         "php": ">=5.4",
         "zendframework/zendframework": "~2.1",
         "zf-commons/zfc-base": "0.1.2",
-        "hrevert/ht-img-module": "dev-master"
+        "hrevert/ht-img-module": "0.0.*"
     },
     "autoload": {
         "psr-0": {
