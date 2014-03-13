@@ -13,6 +13,11 @@ class LogoResolver implements ResolverInterface
     protected $logoPathProvider;
 
     /**
+     * @var string  (Logo Path of default logo, used when logo does not exists)
+     */
+    protected $defaultLogoPath;
+
+    /**
      * Constructor
      *
      * @param LogoPathProviderInterface $logoPathProvider
@@ -23,12 +28,24 @@ class LogoResolver implements ResolverInterface
     }
 
     /**
+     * Sets logo path of default logo
+     *
+     * @param string $defaultLogoPath
+     * @return void 
+     */
+    public function setDefaultLogoPath($defaultLogoPath)
+    {
+        $this->defaultLogoPath = $defaultLogoPath;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function resolve($name, Renderer $renderer = null)
     {
         if ($name === 'htcustomerlogo') {
-            return $this->logoPathProvider->getLogoPath();
+            $logoPath = $this->logoPathProvider->getLogoPath();
+            return is_readable($logoPath) ? $logoPath : $this->defaultLogoPath;
         }
     }
 }

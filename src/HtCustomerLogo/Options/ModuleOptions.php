@@ -3,6 +3,7 @@
 namespace HtCustomerLogo\Options;
 
 use Zend\Stdlib\AbstractOptions;
+use HtCustomerLogo\Exception;
 
 class ModuleOptions extends AbstractOptions implements StorageOptionsInterface, DisplayOptionsInterface
 {
@@ -17,6 +18,11 @@ class ModuleOptions extends AbstractOptions implements StorageOptionsInterface, 
     protected $defaultDisplayFilter = 'htcustomerlogo_display';
 
     protected $postUploadRoute = false;
+
+    /**
+     * @var string  (Logo Path of default logo, used when logo does not exists)
+     */
+    protected $defaultLogoPath;
 
     public function setUploadDirectory($uploadDirectory)
     {
@@ -71,4 +77,16 @@ class ModuleOptions extends AbstractOptions implements StorageOptionsInterface, 
         return $this->postUploadRoute;
     }
 
+    public function setDefaultLogoPath($defaultLogoPath)
+    {
+        if (!is_readable($defaultLogoPath)) {
+            throw new Exception\LogoNotFoundException(sprintf('Default Logo, %s  does not exists', $defaultLogoPath));
+        }
+        $this->defaultLogoPath = $defaultLogoPath;
+    }
+
+    public function getDefaultLogoPath()
+    {
+        return $this->defaultLogoPath;
+    }
 }
