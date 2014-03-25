@@ -1,7 +1,7 @@
 <?php
-  
-namespace HtCustomerLogo\Service;  
-    
+
+namespace HtCustomerLogo\Service;
+
 interface LogoDirectoryProviderInterface
 {
     /**

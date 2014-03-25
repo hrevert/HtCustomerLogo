@@ -9,10 +9,10 @@ class LogoResolverFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $resolvers)
     {
-        $serviceLocator = $resolvers->getServiceLocator();        
+        $serviceLocator = $resolvers->getServiceLocator();
         $resolver = new LogoResolver($serviceLocator->get('HtCustomerLogo\Service\LogoPathProvider'));
         $resolver->setDefaultLogoPath($serviceLocator->get('HtCustomerLogo\ModuleOptions')->getDefaultLogoPath());
-        
-        return $resolver; 
+
+        return $resolver;
     }
 }

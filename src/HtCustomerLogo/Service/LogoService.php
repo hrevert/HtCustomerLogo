@@ -1,11 +1,10 @@
 <?php
-    
+
 namespace HtCustomerLogo\Service;
 
 use ZfcBase\EventManager\EventProvider;
 use HtCustomerLogo\Form\LogoForm;
 use HtCustomerLogo\Form\LogoValidator;
-use HtCustomerLogo\Form\LogoInputFilter;
 use Zend\Http\Request;
 
 class LogoService extends EventProvider implements LogoServiceInterface
@@ -31,14 +30,13 @@ class LogoService extends EventProvider implements LogoServiceInterface
             $image= $this->getServiceLocator()->get('HtImg\Imagine')
                 ->open($request->getFiles()->toArray()['logo']['tmp_name']);
             $image->save($uploadTarget);
-            $this->getEventManager()->trigger(__FUNCTION__ . '.post', $this, array('image' => $image, 'uploadTarget' => $uploadTarget));     
+            $this->getEventManager()->trigger(__FUNCTION__ . '.post', $this, array('image' => $image, 'uploadTarget' => $uploadTarget));
 
             return true;
         }
 
-        return false;     
+        return false;
     }
-
 
     /**
      * Gets options
@@ -50,6 +48,7 @@ class LogoService extends EventProvider implements LogoServiceInterface
         if (!$this->options) {
             $this->options = $this->getServiceLocator()->get('HtCustomerLogo\ModuleOptions');
         }
+
         return $this->options;
     }
 
@@ -58,6 +57,7 @@ class LogoService extends EventProvider implements LogoServiceInterface
         if (!$this->logoPathProvider) {
             $this->logoPathProvider = $this->getServiceLocator()->get('HtCustomerLogo\Service\LogoPathProvider');
         }
-        return $this->logoPathProvider;        
+
+        return $this->logoPathProvider;
     }
 }

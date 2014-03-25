@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace HtCustomerLogo\EventManager;
 
 use Zend\EventManager\SharedEventManagerInterface;
@@ -12,12 +12,12 @@ class LogoUploadListener implements SharedListenerAggregateInterface
      * @var \Zend\Stdlib\CallbackHandler[]
      */
     protected $listeners = array();
-    
+
     /**
      * Attach the aggregate to the specified event manager
      *
      * @param  SharedEventManagerInterface $events
-     * @param  int $priority
+     * @param  int                         $priority
      * @return void
      */
     public function attachShared(SharedEventManagerInterface $events)
@@ -40,11 +40,11 @@ class LogoUploadListener implements SharedListenerAggregateInterface
             }
         }
     }
-    
+
     /**
      * Listenter event for "storeLogo.post" event and is responsible for manipulating image
      *
-     * @param Event $e
+     * @param  Event $e
      * @return void
      */
     public function resizeImage(Event $e)
@@ -58,14 +58,14 @@ class LogoUploadListener implements SharedListenerAggregateInterface
             $filterManager = $service->getServiceLocator()->get('HtImgModule\Imagine\Filter\FilterManager');
             $filter = $filterManager->get($storageFilterAlias);
             $manipulatedImage = $filter->apply($image);
-            $manipulatedImage->save($uploadTarget);            
+            $manipulatedImage->save($uploadTarget);
         }
     }
 
     /**
      * Listenter event for "storeLogo.post" event and is responsible for deleting cache in web root
      *
-     * @param Event $e
+     * @param  Event $e
      * @return void
      */
     public function deleteCache(Event $e)
@@ -74,11 +74,11 @@ class LogoUploadListener implements SharedListenerAggregateInterface
         $uploadTarget = $e->getParam('uploadTarget');
         $service = $e->getTarget();
         $cacheManager = $service->getServiceLocator()->get('HtImgModule\Service\CacheManager');
-        $options = $service->getOptions(); 
-        $filters = array_merge([$options->getDefaultDisplayFilter()], $options->getDisplayFilters());  
+        $options = $service->getOptions();
+        $filters = array_merge([$options->getDefaultDisplayFilter()], $options->getDisplayFilters());
         foreach ($filters as $filter) {
             $cacheManager->deleteCache('htcustomerlogo', $filter, $uploadTarget);
-        }     
+        }
     }
-            
+
 }

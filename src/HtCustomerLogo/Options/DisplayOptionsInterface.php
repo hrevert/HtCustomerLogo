@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace HtCustomerLogo\Options;
 
 interface DisplayOptionsInterface

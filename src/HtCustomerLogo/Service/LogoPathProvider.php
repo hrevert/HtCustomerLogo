@@ -9,7 +9,7 @@ class LogoPathProvider implements LogoPathProviderInterface
 {
 
     const LOGO_DEFAULT_FILENAME = 'logo.png';
-    
+
     /**
      * @var LogoDirectoryProviderInterface
      */
@@ -24,7 +24,7 @@ class LogoPathProvider implements LogoPathProviderInterface
      * Constructor
      *
      * @param LogoDirectoryProviderInterface $logoDirectoryProvider
-     * @param StorageOptionsInterface $storageOptions
+     * @param StorageOptionsInterface        $storageOptions
      */
     public function __construct(
         LogoDirectoryProviderInterface $logoDirectoryProvider,
@@ -32,7 +32,7 @@ class LogoPathProvider implements LogoPathProviderInterface
     )
     {
         $this->logoDirectoryProvider = $logoDirectoryProvider;
-        $this->storageOptions = $storageOptions;   
+        $this->storageOptions = $storageOptions;
     }
 
     /**

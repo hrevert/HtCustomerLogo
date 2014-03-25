@@ -10,7 +10,7 @@ class LogoUrlFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $helpers)
     {
         $serviceLocator = $helpers->getServiceLocator();
-        
+
         return new LogoUrl(
             $serviceLocator->get('HtCustomerLogo\ModuleOptions')->getDefaultDisplayFilter(),
             $serviceLocator->get('HtCustomerLogo\Service\LogoPathProvider')

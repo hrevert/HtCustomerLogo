@@ -32,7 +32,7 @@ return [
                 'options' => [
                     'width' => 75,
                     'height' => 32,
-                    'mode' => 'outbound '                
+                    'mode' => 'outbound '
                 ]
             ]
         ],

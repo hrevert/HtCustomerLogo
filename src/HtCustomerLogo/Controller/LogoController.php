@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace HtCustomerLogo\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -39,28 +39,28 @@ class LogoController extends AbstractActionController
         $error = false;
 
         $request = $this->getRequest();
-        if ($request->isPost()) {           
+        if ($request->isPost()) {
             if ($this->logoService->storeLogo($request)) {
                 $options = $this->getOptions();
                 if ($request->isXmlHttpRequest()) {
                     return new JsonModel(array(
                         'uploaded' => true
-                    ));                     
+                    ));
                 } elseif ($options->getPostUploadRoute()) {
                     return call_user_func_array(array($this->redirect(), 'toRoute'), (array) $options->getPostUploadRoute());
-                } 
-                $logoUploaded = true; 
+                }
+                $logoUploaded = true;
             } else {
                 if ($request->isXmlHttpRequest()) {
                     return new JsonModel(array(
                         'error' => true,
                         'messages' => $form->getMessages()
-                    ));                    
+                    ));
                 } else {
                     $error = true;
-                }                 
+                }
             }
-                       
+
         }
 
         return array(
@@ -69,7 +69,6 @@ class LogoController extends AbstractActionController
             'error' => $error
         );
     }
-
 
     /**
      * Gets options
@@ -81,6 +80,7 @@ class LogoController extends AbstractActionController
         if (!$this->options) {
             $this->options = $this->getServiceLocator()->get('HtCustomerLogo\ModuleOptions');
         }
+
         return $this->options;
     }
 

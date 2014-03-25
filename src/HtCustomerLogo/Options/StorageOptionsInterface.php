@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace HtCustomerLogo\Options;
 
 interface StorageOptionsInterface
@@ -12,4 +12,4 @@ interface StorageOptionsInterface
 
     public function getStorageFilter();
 
-} 
+}

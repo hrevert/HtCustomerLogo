@@ -30,8 +30,8 @@ class LogoResolver implements ResolverInterface
     /**
      * Sets logo path of default logo
      *
-     * @param string $defaultLogoPath
-     * @return void 
+     * @param  string $defaultLogoPath
+     * @return void
      */
     public function setDefaultLogoPath($defaultLogoPath)
     {
@@ -45,6 +45,7 @@ class LogoResolver implements ResolverInterface
     {
         if ($name === 'htcustomerlogo') {
             $logoPath = $this->logoPathProvider->getLogoPath();
+
             return is_readable($logoPath) ? $logoPath : $this->defaultLogoPath;
         }
     }

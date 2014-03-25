@@ -16,9 +16,9 @@ class LogoUrl extends AbstractHelper
         $this->defaultDisplayFilter = $defaultDisplayFilter;
         $this->logoPathProvider = $logoPathProvider;
     }
-    
+
     public function __invoke($filter = null)
     {
         return $this->getView()->htImgUrl('htcustomerlogo', $filter ? $filter : $this->defaultDisplayFilter);
-    }       
+    }
 }

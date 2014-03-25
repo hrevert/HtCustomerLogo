@@ -1,6 +1,6 @@
 <?php
-    
-namespace HtCustomerLogo\Service;  
+
+namespace HtCustomerLogo\Service;
 
 interface LogoPathProviderInterface
 {
@@ -9,5 +9,5 @@ interface LogoPathProviderInterface
      *
      * @return string
      */
-    public function getLogoPath();    
+    public function getLogoPath();
 }

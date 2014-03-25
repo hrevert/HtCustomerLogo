@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace HtCustomerLogo\Options;
 
 use Zend\Stdlib\AbstractOptions;
@@ -45,7 +45,6 @@ class ModuleOptions extends AbstractOptions implements StorageOptionsInterface, 
     {
         return $this->storageFilter;
     }
-
 
     public function setDisplayFilters($displayFilters)
     {

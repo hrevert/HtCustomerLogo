@@ -25,9 +25,8 @@ class LogoInputFilter extends ProvidesEventsInputFilter
                         'target' => $this->uploadTarget,
                         'overwrite' => true,
                     )
-                )            
-            )            
+                )
+            )
         ));
     }
 }
-

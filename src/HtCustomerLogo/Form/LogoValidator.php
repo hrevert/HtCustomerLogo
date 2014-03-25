@@ -37,8 +37,7 @@ class LogoValidator extends ProvidesEventsInputFilter
                         )
                     )
                 )
-            )           
-        ));        
+            )
+        ));
     }
 }
-

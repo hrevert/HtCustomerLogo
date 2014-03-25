@@ -3,7 +3,6 @@ namespace HtCustomerLogo;
 
 use Zend\Mvc\MvcEvent;
 use HtCustomerLogo\EventManager\LogoUploadListener;
-use Zend\EventManager\EventInterface;
 
 class Module
 {

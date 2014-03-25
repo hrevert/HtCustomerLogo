@@ -1,5 +1,5 @@
 <?php
-namespace HtCustomerLogo\Service;  
+namespace HtCustomerLogo\Service;
 
 use HtCustomerLogo\Options\StorageOptionsInterface;
 use HtCustomerLogo\Exception;
