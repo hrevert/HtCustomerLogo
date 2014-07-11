@@ -32,17 +32,15 @@ return [
                 'options' => [
                     'width' => 75,
                     'height' => 32,
-                    'mode' => 'outbound '
+                    'mode'  => 'outbound',
+                    'image_loader' => 'htcustomerlogo',
                 ]
             ]
         ],
-        'resolvers_manager' => [
+        'loaders' => [
             'factories' => [
-                'htcustomerlogo' => 'HtCustomerLogo\Imagine\Resolver\Factory\LogoResolverFactory',
+                'htcustomerlogo' => 'HtCustomerLogo\Imagine\Loader\Factory\LogoLoaderFactory',
             ]
-        ],
-        'image_resolvers' => [
-            'htcustomerlogo'
         ]
     ]
 ];

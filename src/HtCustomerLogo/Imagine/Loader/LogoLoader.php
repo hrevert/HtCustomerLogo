@@ -1,11 +1,10 @@
 <?php
-namespace HtCustomerLogo\Imagine\Resolver;
+namespace HtCustomerLogo\Imagine\Loader;
 
-use HtImgModule\Imagine\Resolver\ResolverInterface;
-use Zend\View\Renderer\RendererInterface as Renderer;
+use HtImgModule\Imagine\Loader\LoaderInterface;
 use HtCustomerLogo\Service\LogoPathProviderInterface;
 
-class LogoResolver implements ResolverInterface
+class LogoLoader implements LoaderInterface
 {
     /**
      * @var LogoPathProviderInterface
@@ -41,9 +40,9 @@ class LogoResolver implements ResolverInterface
     /**
      * {@inheritDoc}
      */
-    public function resolve($name, Renderer $renderer = null)
+    public function load($relativePath)
     {
-        if ($name === 'htcustomerlogo') {
+        if ($relativePath === 'htcustomerlogo') {
             $logoPath = $this->logoPathProvider->getLogoPath();
 
             return is_readable($logoPath) ? $logoPath : $this->defaultLogoPath;
